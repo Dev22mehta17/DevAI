@@ -6,3 +6,6 @@ bhi karege yrr time milne per
 karlege yrr
 kareege yr
 karte h yr jald he 
+
+dsfhgszdvvb7rvtecrv
+idk
