@@ -12,3 +12,4 @@ idk
 
 karte h jald he 
 bht jald 
+karta hu
