@@ -9,3 +9,6 @@ karte h yr jald he
 
 dsfhgszdvvb7rvtecrv
 idk
+
+karte h jald he 
+bht jald 
