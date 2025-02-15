@@ -14,3 +14,4 @@ karte h jald he
 bht jald 
 karta hu
 karta hu
+karege kartee h
