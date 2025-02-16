@@ -15,3 +15,4 @@ bht jald
 karta hu
 karta hu
 karege kartee h
+hm hoge kamiyab hm hoge kamyab ek dinn karte h
