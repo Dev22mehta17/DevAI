@@ -1,15 +1,14 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/theme-provider";
+import Header from "@/components/header";
+import { ClerkProvider } from "@clerk/nextjs";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// import { dark } from "@clerk/themes";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -18,12 +17,35 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider
+      // appearance={{
+      //   baseTheme: 'dark',
+      // }}
+    >
+      <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel="icon" href="/logo.png" sizes="any" />
+        </head>
+        <body className={`${inter.className}`}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {/* header */}
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            {/* <Toaster richColors /> */}
+
+            <footer className="bg-muted/50 py-12">
+              <div className="container mx-auto px-4 text-center text-gray-200">
+                <p>Made with 💗 by Dev Mehta</p>
+              </div>
+            </footer>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
