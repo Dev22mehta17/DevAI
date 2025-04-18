@@ -24,13 +24,22 @@ import useFetch from "@/hooks/use-fetch";
 import { useUser } from "@clerk/nextjs";
 import { entriesToMarkdown } from "@/app/lib/helper";
 import { resumeSchema } from "@/app/lib/schema";
-import html2pdf from "html2pdf.js/dist/html2pdf.min.js";
+import dynamic from 'next/dynamic';
+// import html2pdf from "html2pdf.js";
+// import html2pdf from "html2pdf.js";
+
 
 export default function ResumeBuilder({ initialContent }) {
   const [activeTab, setActiveTab] = useState("edit");
   const [previewContent, setPreviewContent] = useState(initialContent);
   const { user } = useUser();
   const [resumeMode, setResumeMode] = useState("preview");
+
+  
+const html2pdf = dynamic(
+  () => import('html2pdf.js').then((mod) => mod.default),
+  { ssr: false }
+);
 
   const {
     control,
@@ -113,25 +122,56 @@ export default function ResumeBuilder({ initialContent }) {
 
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const generatePDF = async () => {
-    setIsGenerating(true);
-    try {
-      const element = document.getElementById("resume-pdf");
-      const opt = {
+//   const generatePDF = async () => {
+//     setIsGenerating(true);
+//     try {
+//       const element = document.getElementById("resume-pdf");
+//       const opt = {
+//         margin: [15, 15],
+//         filename: "resume.pdf",
+//         image: { type: "jpeg", quality: 0.98 },
+//         html2canvas: { scale: 2 },
+//         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+//       };
+
+//       await html2pdf().set(opt).from(element).save();
+//     } catch (error) {
+//       console.error("PDF generation error:", error);
+//     } finally {
+//       setIsGenerating(false);
+//     }
+//   };
+
+
+// Remove any static html2pdf import
+const generatePDF = async () => {
+  setIsGenerating(true);
+  try {
+    // Client-side guard
+    if (typeof document === 'undefined') return;
+
+    // Dynamic import (client-side only)
+    const html2pdf = (await import('html2pdf.js')).default;
+    
+    const element = document.getElementById("resume-pdf");
+    // if (!element) throw new Error("Resume element not found");
+
+    await html2pdf()
+      .set({
         margin: [15, 15],
         filename: "resume.pdf",
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      };
-
-      await html2pdf().set(opt).from(element).save();
-    } catch (error) {
-      console.error("PDF generation error:", error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+      })
+      .from(element)
+      .save();
+  } catch (error) {
+    console.error("PDF generation error:", error);
+  } finally {
+    setIsGenerating(false);
+  }
+};
 
   const onSubmit = async (data) => {
     try {
