@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { checkUser } from "@/lib/checkUser"
+import OnboardingButton from "@/app/(main)/onboarding/_components/onboardingbutton"
 
 
 const Header = async() => {
@@ -26,12 +27,6 @@ const Header = async() => {
         </Link>
         <div  className="flex items-center space-x-2 md:space-x-4">
         <SignedIn>
-          <Link href='/onboarding'>
-            <Button variant="outline">
-              <LayoutDashboard className="h-4 w-4"/>
-              <span className="hidden md:block"> Onboarding</span>
-            </Button>
-            </Link>
             <Link href='/dashboard'>
             <Button variant="outline">
               <LayoutDashboard className="h-4 w-4"/>
