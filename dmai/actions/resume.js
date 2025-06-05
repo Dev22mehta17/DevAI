@@ -96,3 +96,88 @@ export async function improveWithAI({ current, type }) {
     throw new Error("Failed to improve content");
   }
 }
+
+export async function checkATSScore(resumeContent, jobDescription) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  const prompt = `
+    Analyze this resume against the job description and provide an ATS (Applicant Tracking System) compatibility score and detailed feedback.
+    
+    Resume:
+    ${resumeContent}
+    
+    Job Description:
+    ${jobDescription}
+    
+    Return the response in this JSON format only, no additional text:
+    {
+      "overallScore": number, // 0-100
+      "keywordMatch": {
+        "matched": ["keyword1", "keyword2"],
+        "missing": ["keyword3", "keyword4"]
+      },
+      "formatScore": number, // 0-100
+      "contentScore": number, // 0-100
+      "suggestions": [
+        {
+          "category": "string", // "format", "content", "keywords"
+          "suggestion": "string",
+          "priority": "high" | "medium" | "low"
+        }
+      ],
+      "strengths": ["string"],
+      "weaknesses": ["string"]
+    }
+  `;
+
+  let text = undefined;
+  try {
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    text = response.text();
+
+    // Try to extract JSON from the response robustly
+    let cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
+    // Try to find the first and last curly braces
+    const firstBrace = cleanedText.indexOf("{");
+    const lastBrace = cleanedText.lastIndexOf("}");
+    if (firstBrace !== -1 && lastBrace !== -1) {
+      cleanedText = cleanedText.substring(firstBrace, lastBrace + 1);
+    }
+
+    let atsAnalysis;
+    try {
+      atsAnalysis = JSON.parse(cleanedText);
+    } catch (jsonErr) {
+      console.error("Failed to parse Gemini JSON:", cleanedText);
+      throw new Error("Gemini did not return valid JSON. Try again or simplify your input.");
+    }
+
+    // Save the ATS analysis to the database
+    await db.aTSAnalysis.create({
+      data: {
+        userId: user.id,
+        score: atsAnalysis.overallScore,
+        analysis: atsAnalysis,
+        jobDescription,
+      },
+    });
+
+    return atsAnalysis;
+  } catch (error) {
+    console.error("Error analyzing ATS score:", error);
+    if (error && error.stack) console.error(error.stack);
+    console.error("Gemini raw response:", text || "(no response)");
+    if (error?.response) {
+      console.error("Gemini error response:", error.response);
+    }
+    throw error;
+  }
+}

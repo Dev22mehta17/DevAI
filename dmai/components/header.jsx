@@ -62,6 +62,12 @@ const Header = async() => {
                     Interview Prep
                   </Link>
     </DropdownMenuItem>
+    <DropdownMenuItem asChild>
+    <Link href="/ats-checker" className="flex items-center gap-2">
+      <FileText className="h-4 w-4" />
+      ATS Score Checker
+    </Link>
+    </DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 

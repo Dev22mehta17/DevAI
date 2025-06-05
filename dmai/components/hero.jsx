@@ -54,14 +54,14 @@ const HeroSection = () => {
             </Button>
           </Link>
         </div>
-        <div className="hero-image-wrapper mt-5 md:mt-0">
-          <div ref={imageRef} className="hero-image">
+        <div className="hero-image-wrapper mt-5 md:mt-0 w-full">
+          <div ref={imageRef} className="hero-image w-full">
             <Image
               src="/banner.jpeg"
-              width={1280}
+              width={1920}
               height={720}
               alt="Dashboard Preview"
-              className="rounded-lg shadow-2xl border mx-auto"
+              className="w-full h-auto object-cover rounded-lg shadow-2xl border"
               priority
             />
           </div>

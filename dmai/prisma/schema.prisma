@@ -26,7 +26,8 @@ model User {
   skills        String[]  // Array of skills
   assessments   Assessment[]
   resume        Resume?
-  coverLetter   CoverLetter[]
+  coverLetters  CoverLetter[]
+  atsAnalyses   ATSAnalysis[]
 }
 
 model Assessment {
@@ -96,4 +97,17 @@ model IndustryInsight {
   nextUpdate    DateTime  // Scheduled update time
 
   @@index([industry])
+}
+
+model ATSAnalysis {
+  id              String   @id @default(cuid())
+  userId          String
+  score           Int
+  analysis        Json
+  jobDescription  String   @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
