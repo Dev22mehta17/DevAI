@@ -16,22 +16,7 @@ export default function ATSUploadChecker() {
     const file = e.target.files[0];
     if (!file) return;
     try {
-      if (file.type === "application/pdf") {
-        // Send PDF to server for parsing
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await fetch("/api/parse-pdf", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setResumeText(data.text);
-        } else {
-          setError(data.error || "Failed to parse PDF.");
-        }
-        setLoading(false);
-      } else if (
+      if (
         file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ) {
         // Send DOCX to server for parsing
@@ -54,7 +39,7 @@ export default function ATSUploadChecker() {
         setResumeText(text);
         setLoading(false);
       } else {
-        setError("Unsupported file type. Please upload PDF, DOCX, or TXT.");
+        setError("Unsupported file type. Please upload DOCX or TXT.");
         setLoading(false);
       }
     } catch (err) {
@@ -76,7 +61,7 @@ export default function ATSUploadChecker() {
         <input
           id="resume-upload"
           type="file"
-          accept=".pdf,.docx,.txt"
+          accept=".docx,.txt"
           onChange={handleFileChange}
           className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary mb-4 p-2"
         />
