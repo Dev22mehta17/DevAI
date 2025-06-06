@@ -13,7 +13,7 @@ import { faqs } from "@/data/faqs";
 import { features } from "@/data/features";
 import { howItWorks } from "@/data/howItWorks";
 import { testimonial } from "@/data/testimonial";
-import Image from "next/image";
+// import Image from "next/image";
 import {
   Accordion,
   AccordionContent,
@@ -116,7 +116,7 @@ export default function Home() {
                   <div className="flex flex-col space-y-4">
                     <div className="flex items-center space-x-4 mb-4">
                       <div className="relative h-12 w-12 flex-shrink-0">
-                        <Image
+                        <img
                           width={40}
                           height={40}
                           src={testimonial.image}
