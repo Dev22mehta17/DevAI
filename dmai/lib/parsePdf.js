@@ -4,4 +4,4 @@ async function parsePdfBuffer(buffer) {
   return await pdfParse(buffer);
 }
 
-module.exports = { parsePdfBuffer }; 
+module.exports = { parsePdfBuffer };
