@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { parsePdfBuffer } = require("../../../lib/parsePdf.js");
+const { parsePdfBuffer } = require("../../../lib/parsePdf");
 
 export const runtime = "nodejs";
 
