@@ -26,4 +26,4 @@ export async function POST(req) {
     console.error("API error:", err);
     return NextResponse.json({ error: "Failed to parse PDF: " + err.message }, { status: 400 });
   }
-} 
+}
