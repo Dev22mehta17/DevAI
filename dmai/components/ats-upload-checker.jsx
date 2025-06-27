@@ -33,14 +33,15 @@ export default function ATSUploadChecker() {
           setError(data.error || "Failed to parse DOCX.");
         }
         setLoading(false);
-      } else if (file.type === "application/pdf") {
-        // Send PDF to server for parsing
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await fetch("/api/parse-pdf", {
-          method: "POST",
-          body: formData,
-        });
+      }
+      // } else if (file.type === "application/pdf") {
+      //   // Send PDF to server for parsing
+      //   const formData = new FormData();
+      //   formData.append("file", file);
+      //   const res = await fetch("/api/parse-pdf", {
+      //     method: "POST",
+      //     body: formData,
+      //   });
         const data = await res.json();
         if (res.ok) {
           setResumeText(data.text);
