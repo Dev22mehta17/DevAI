@@ -74,12 +74,12 @@ const Header = async() => {
       ATS Score Checker
     </Link>
     </DropdownMenuItem>
-    <DropdownMenuItem asChild>
+{/*     <DropdownMenuItem asChild>
     <Link href="/file-converter" className="flex items-center gap-2">
       <FileText className="h-4 w-4" />
       File Converter
     </Link>
-    </DropdownMenuItem>
+    </DropdownMenuItem> */}
   </DropdownMenuContent>
 </DropdownMenu>
 
