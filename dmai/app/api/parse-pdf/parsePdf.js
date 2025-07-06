@@ -1,7 +1,7 @@
-const pdfParse = require("pdf-parse");
+// const pdfParse = require("pdf-parse");
 
-async function parsePdfBuffer(buffer) {
-  return await pdfParse(buffer);
-}
+// async function parsePdfBuffer(buffer) {
+//   return await pdfParse(buffer);
+// }
 
-module.exports = { parsePdfBuffer };
+// module.exports = { parsePdfBuffer };
