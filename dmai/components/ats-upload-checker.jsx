@@ -33,28 +33,28 @@ export default function ATSUploadChecker() {
           setError(data.error || "Failed to parse DOCX.");
         }
         setLoading(false);
-      } else if (file.type === "application/pdf") {
-        // Send PDF to server for parsing
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await fetch("/api/parse-pdf", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setResumeText(data.text);
-        } else {
-          setError(data.error || "Failed to parse PDF.");
-        }
-        setLoading(false);
+      // } else if (file.type === "application/pdf") {
+      //   // Send PDF to server for parsing
+      //   const formData = new FormData();
+      //   formData.append("file", file);
+      //   const res = await fetch("/api/parse-pdf", {
+      //     method: "POST",
+      //     body: formData,
+      //   });
+      //   const data = await res.json();
+      //   if (res.ok) {
+      //     setResumeText(data.text);
+      //   } else {
+      //     setError(data.error || "Failed to parse PDF.");
+      //   }
+      //   setLoading(false);
       } else if (file.type === "text/plain") {
         // TXT parsing
         const text = await file.text();
         setResumeText(text);
         setLoading(false);
       } else {
-        setError("Unsupported file type. Please upload DOCX, PDF, or TXT.");
+        setError("Unsupported file type. Please upload DOCX or TXT.");
         setLoading(false);
       }
     } catch (err) {
@@ -68,7 +68,7 @@ export default function ATSUploadChecker() {
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">ATS Score Checker</h2>
         <p className="text-muted-foreground">
-          Upload your resume (DOCX, PDF, or TXT) or paste your resume text below.
+          Upload your resume (DOCX or TXT) or paste your resume text below.
         </p>
       </div>
       <div>
