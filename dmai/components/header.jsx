@@ -27,12 +27,12 @@ const Header = async() => {
         </Link>
         <div  className="flex items-center space-x-2 md:space-x-4">
         <SignedIn>
-            <Link href='/onboarding'>
+            {/* <Link href='/onboarding'>
             <Button variant="outline">
               <LayoutDashboard className="h-4 w-4"/>
               <span className="hidden md:block"> Onboarding</span>
             </Button>
-            </Link>
+            </Link> */}
             <Link href='/dashboard'>
             <Button variant="outline">
               <LayoutDashboard className="h-4 w-4"/>

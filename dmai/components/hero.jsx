@@ -48,16 +48,16 @@ const HeroSection = () => {
               Get Started
             </Button>
           </Link>
-          <Link href="/dashboard">
-            <Button size="lg" variant="outline" className="px-8">
-              Watch Demo
+          <Link href="/onboarding">
+            <Button size="lg" variant="secondary" className="px-8 font-bold">
+              Onboarding
             </Button>
           </Link>
         </div>
         <div className="hero-image-wrapper mt-5 md:mt-0 w-full">
           <div ref={imageRef} className="hero-image w-full">
             <img
-              src="/banner.jpeg"
+              src="/MainImage(1).jpeg"
               width={1920}
               height={720}
               alt="Dashboard Preview"
